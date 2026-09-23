@@ -385,9 +385,56 @@
     </figure>
   </section>
 
-  <!-- ═══════════════════════════════ שלבים ═══ -->
+  <!-- ═══════════════════════════════ התחלה מהירה ═══ -->
   <section>
-    <h2>ארבעה שלבים</h2>
+    <h2>התחלה מהירה (דקה אחת)</h2>
+    <p class="lead">צריך רק Docker. כל השאר הוא אוטומטי.</p>
+
+    <div class="steps">
+      <article class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <h3>מתקינים Docker</h3>
+          <p>
+            מורידים מ־<a href="https://docker.com/products/docker-desktop" style="color:var(--sky)">docker.com</a>, מתקינים, פותחים.
+          </p>
+          <div class="hint">אם כבר יש Docker, דלגו לשלב 2.</div>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <h3>בפקודה אחת</h3>
+          <p>Clone את ה-repo, נכנסו לתוכו, והריצו את הסקריפט הזה:</p>
+<pre><code><span class="c"># Mac / Linux</span>
+./setup-floci.sh</code></pre>
+<pre><code><span class="c"># Windows</span>
+setup-floci.bat</code></pre>
+          <div class="hint">הסקריפט מעלה את Floci, מוריד את התוכנה בפעם הראשונה, וקובע את כל ה-env vars. זה הכל.</div>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <h3>טסטו</h3>
+          <p>
+            <em>Bucket</em> זו תיקייה בענן. בדקו שהכל עובד:
+          </p>
+<pre><code>source .env.floci  <span class="c"># Mac/Linux</span>
+aws s3 mb s3://my-test-bucket
+aws s3 ls</code></pre>
+          <div class="hint">רואים את השם ברשימה? מוכנים! 🎉</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ שלבים ידניים ═══ -->
+  <section>
+    <h2>שלבים ידניים (אם אתם רוצים להבין כל דבר)</h2>
+    <p class="lead">כך קורה בצד הקלעים כשאתם מריצים את הסקריפט. שימוש — אם אתם אוהבים בניית דברים ידני או למידה עמוקה.</p>
 
     <div class="steps">
 
@@ -399,7 +446,7 @@
             Docker זו תוכנה שיודעת להריץ תוכנות אחרות בתוך &ldquo;קופסה&rdquo; מבודדת.
             Floci רץ בקופסה כזו. מורידים מ־<a href="https://docker.com/products/docker-desktop" style="color:var(--sky)">docker.com</a>, מתקינים, פותחים.
           </p>
-          <div class="hint">איך יודעים שזה עובד? מריצים <code>docker --version</code> ומקבלים מספר.</div>
+          <div class="hint">בדקו שהוא עובד: <code>docker --version</code></div>
         </div>
       </article>
 
@@ -409,7 +456,7 @@
           <h3>מרימים את Floci</h3>
           <p>פקודה אחת. בפעם הראשונה זה מוריד את התוכנה, אחר כך זה מיידי.</p>
 <pre><code>docker run -d --name floci -p 4566:4566 floci/floci</code></pre>
-          <div class="hint"><code>-p 4566:4566</code> אומר: &ldquo;פתח את דלת מספר 4566&rdquo;. זו הכתובת מהאיור למעלה.</div>
+          <div class="hint"><code>-p 4566:4566</code> אומר: &ldquo;פתח את דלת מספר 4566&rdquo;. זו הכתובת מהאיור למעלה. (או השתמשו ב-<code>docker-compose.yml</code> שבפוקט.)</div>
         </div>
       </article>
 
@@ -428,7 +475,7 @@ $env:AWS_ENDPOINT_URL="http://localhost:4566"
 $env:AWS_ACCESS_KEY_ID="test"
 $env:AWS_SECRET_ACCESS_KEY="test"
 $env:AWS_DEFAULT_REGION="us-east-1"</code></pre>
-          <div class="hint">זה תקף רק לחלון הטרמינל הנוכחי. סוגרים אותו — צריך שוב.</div>
+          <div class="hint">או: <code>source .env.floci</code> (אחרי שעתקתם את <code>.env.floci.example</code>)</div>
         </div>
       </article>
 

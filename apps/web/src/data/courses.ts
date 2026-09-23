@@ -47,12 +47,14 @@ export const courses: Course[] = [
   {
     id: 'local-development',
     title: 'Local Development',
-    description: 'כלים וטכניקות לפיתוח וטסטינג מקומי של יישומי AWS בלי לנסוע לענן.',
+    description:
+      'כלים וטכניקות לפיתוח וטסטינג מקומי של יישומי AWS בלי לנסוע לענן.',
     labs: [
       {
         id: 'floci-intro',
         title: 'Floci: ענן על המחשב שלך',
-        summary: 'הכירו את Floci — שרת מקומי שמחקה AWS ושמאפשר פיתוח מהיר וחינם.',
+        summary:
+          'הכירו את Floci — שרת מקומי שמחקה AWS ושמאפשר פיתוח מהיר וחינם.',
         embedPath: '/labs/floci-intro/index.html',
         about: [
           '"ענן" זה בסך הכל מחשבים של מישהו אחר, רחוק. Floci מריץ עתק קטן שלהם — אצלך. בגיד קטן של קוד, תוכל להפעיל משירותי AWS שונים בחיסכון בעלויות, חסכון בזמן, וללא דאגה מטעויות כרטיס אשראי.',
@@ -67,9 +69,6 @@ export function getCourseById(courseId: string): Course | undefined {
   return courses.find((course) => course.id === courseId);
 }
 
-export function getLabById(
-  courseId: string,
-  labId: string,
-): Lab | undefined {
+export function getLabById(courseId: string, labId: string): Lab | undefined {
   return getCourseById(courseId)?.labs.find((lab) => lab.id === labId);
 }

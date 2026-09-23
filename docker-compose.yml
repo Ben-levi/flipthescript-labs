@@ -5,7 +5,7 @@ services:
     image: floci/floci:latest
     container_name: floci
     ports:
-      - "4566:4566"
+      - '4566:4566'
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:

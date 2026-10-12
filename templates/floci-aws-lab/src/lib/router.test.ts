@@ -31,6 +31,13 @@ describe('parseRoute', () => {
     expect(parseRoute('#/lambda/')).toEqual({ page: 'lambda-functions' });
   });
 
+  it('reports malformed percent-encoding as not-found', () => {
+    expect(parseRoute('#/s3/buckets/%')).toEqual({
+      page: 'not-found',
+      path: '/s3/buckets/%',
+    });
+  });
+
   it('reports unknown paths', () => {
     expect(parseRoute('#/ec2')).toEqual({ page: 'not-found', path: '/ec2' });
   });

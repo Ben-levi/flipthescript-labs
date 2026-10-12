@@ -14,7 +14,12 @@ export type Route =
 
 export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#/, '').replace(/\/+$/, '') || '/';
-  const parts = path.split('/').filter(Boolean).map(decodeURIComponent);
+  let parts: string[];
+  try {
+    parts = path.split('/').filter(Boolean).map(decodeURIComponent);
+  } catch {
+    return { page: 'not-found', path };
+  }
 
   if (parts.length === 0) return { page: 'home' };
   const [service, ...rest] = parts;

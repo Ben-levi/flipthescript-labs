@@ -22,7 +22,7 @@ import {
   waitForFunctionReady,
 } from './lambda-helpers';
 
-const FUNCTION_NAME_PATTERN = /^[a-zA-Z0-9-_]{1,64}$/;
+const FUNCTION_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,64}$/;
 
 export function CreateFunctionPage() {
   const { notify } = useNotifications();

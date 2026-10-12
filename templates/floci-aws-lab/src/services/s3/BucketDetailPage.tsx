@@ -38,8 +38,19 @@ export function BucketDetailPage({ bucket }: { bucket: string }) {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await s3.send(new ListObjectsV2Command({ Bucket: bucket }));
-      setObjects(res.Contents ?? []);
+      const all: _Object[] = [];
+      let token: string | undefined;
+      do {
+        const res = await s3.send(
+          new ListObjectsV2Command({
+            Bucket: bucket,
+            ContinuationToken: token,
+          }),
+        );
+        all.push(...(res.Contents ?? []));
+        token = res.IsTruncated ? res.NextContinuationToken : undefined;
+      } while (token);
+      setObjects(all);
       setLoadError(null);
     } catch (err) {
       setLoadError(errorMessage(err));
@@ -101,6 +112,33 @@ export function BucketDetailPage({ bucket }: { bucket: string }) {
     }
   };
 
+  const downloadObject = async (object: _Object) => {
+    if (!object.Key) return;
+    try {
+      const res = await s3.send(
+        new GetObjectCommand({ Bucket: bucket, Key: object.Key }),
+      );
+      const bytes =
+        (await res.Body?.transformToByteArray()) ?? new Uint8Array();
+      const url = URL.createObjectURL(
+        new Blob([bytes as BlobPart], {
+          type: res.ContentType ?? 'application/octet-stream',
+        }),
+      );
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = object.Key.split('/').pop() || object.Key;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      notify({
+        type: 'error',
+        header: `Failed to download "${object.Key}"`,
+        content: errorMessage(err),
+      });
+    }
+  };
+
   const onUploaded = (keys: string[]) => {
     setModal(null);
     notify({
@@ -132,6 +170,12 @@ export function BucketDetailPage({ bucket }: { bucket: string }) {
                     ariaLabel="Refresh"
                     onClick={load}
                   />
+                  <Button
+                    disabled={selected.length !== 1}
+                    onClick={() => downloadObject(selected[0])}
+                  >
+                    Download
+                  </Button>
                   <Button
                     disabled={selected.length === 0}
                     onClick={deleteSelected}

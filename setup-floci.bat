@@ -25,9 +25,21 @@ if errorlevel 1 (
 echo ✅ Docker is installed and running
 echo.
 
+REM Pick the Compose command (v2 plugin preferred, legacy binary as fallback)
+set "COMPOSE=docker compose"
+docker compose version >nul 2>&1
+if errorlevel 1 (
+    set "COMPOSE=docker-compose"
+    docker-compose version >nul 2>&1
+    if errorlevel 1 (
+        echo ❌ Docker Compose is not installed. Please update Docker Desktop.
+        exit /b 1
+    )
+)
+
 REM Start Floci with Docker Compose
 echo 📦 Starting Floci container...
-docker-compose up -d
+%COMPOSE% up -d
 
 REM Wait a moment for container to start
 timeout /t 2 /nobreak
@@ -46,7 +58,7 @@ REM Copy env file if it doesn't exist
 if not exist .env.floci (
     echo 📝 Creating .env.floci from template...
     copy .env.floci.example .env.floci >nul
-    echo ✅ Created .env.floci (edit as needed)
+    echo ✅ Created .env.floci - edit as needed
 ) else (
     echo ✅ .env.floci already exists
 )
@@ -64,5 +76,5 @@ echo   # Create a test S3 bucket:
 echo   aws s3 mb s3://my-test-bucket
 echo   aws s3 ls
 echo.
-echo To stop Floci, run: docker-compose down
+echo To stop Floci, run: !COMPOSE! down
 echo.

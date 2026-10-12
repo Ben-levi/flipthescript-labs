@@ -3,7 +3,7 @@ services:
     image: floci/floci:latest
     container_name: floci
     ports:
-      - '4566:4566'
+      - '127.0.0.1:4566:4566'
     # Lambda functions run as real containers (public.ecr.aws/lambda/<runtime>),
     # which Floci starts through the Docker socket.
     user: root

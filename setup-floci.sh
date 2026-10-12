@@ -20,9 +20,19 @@ fi
 
 echo "✅ Docker is installed and running"
 
+# Pick the Compose command (v2 plugin preferred, legacy binary as fallback)
+if docker compose version &> /dev/null; then
+    COMPOSE="docker compose"
+elif command -v docker-compose &> /dev/null; then
+    COMPOSE="docker-compose"
+else
+    echo "❌ Docker Compose is not installed. Please update Docker Desktop."
+    exit 1
+fi
+
 # Start Floci with Docker Compose
 echo "📦 Starting Floci container..."
-docker-compose up -d
+$COMPOSE up -d
 
 # Wait a moment for container to start
 sleep 2
@@ -42,19 +52,15 @@ if [ ! -f .env.floci ]; then
     echo "✅ Created .env.floci (edit as needed)"
 fi
 
-# Export environment variables
-echo "🔧 Loading environment variables..."
-export $(cat .env.floci | xargs)
-
 echo ""
 echo "✨ Floci is ready! Try this:"
 echo ""
 echo "  # Set environment variables in your terminal:"
-echo "  source .env.floci"
+echo "  set -a; source .env.floci; set +a"
 echo ""
 echo "  # Create a test S3 bucket:"
 echo "  aws s3 mb s3://my-test-bucket"
 echo "  aws s3 ls"
 echo ""
-echo "To stop Floci, run: docker-compose down"
+echo "To stop Floci, run: $COMPOSE down"
 echo ""

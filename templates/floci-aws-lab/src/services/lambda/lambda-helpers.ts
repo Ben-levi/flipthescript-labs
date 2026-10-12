@@ -41,6 +41,14 @@ export async function waitForFunctionReady(
     const { Configuration } = await lambda.send(
       new GetFunctionCommand({ FunctionName: functionName }),
     );
+    if (Configuration?.State === 'Failed')
+      throw new Error(
+        `"${functionName}" failed to become active: ${Configuration.StateReason ?? Configuration.StateReasonCode ?? 'unknown reason'}`,
+      );
+    if (Configuration?.LastUpdateStatus === 'Failed')
+      throw new Error(
+        `Update of "${functionName}" failed: ${Configuration.LastUpdateStatusReason ?? Configuration.LastUpdateStatusReasonCode ?? 'unknown reason'}`,
+      );
     const pending =
       Configuration?.State === 'Pending' ||
       Configuration?.LastUpdateStatus === 'InProgress';

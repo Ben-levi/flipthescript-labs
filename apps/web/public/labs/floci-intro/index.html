@@ -911,7 +911,7 @@ setup-floci.bat</code></pre>
             <div class="step-body">
               <h3>טסטו</h3>
               <p><em>Bucket</em> זו תיקייה בענן. בדקו שהכל עובד:</p>
-              <pre><code>source .env.floci  <span class="c"># Mac/Linux</span>
+              <pre><code>set -a; source .env.floci; set +a  <span class="c"># Mac/Linux</span>
 aws s3 mb s3://my-test-bucket
 aws s3 ls</code></pre>
               <div class="hint">רואים את השם ברשימה? מוכנים! 🎉</div>
@@ -984,7 +984,7 @@ $env:AWS_ACCESS_KEY_ID="test"
 $env:AWS_SECRET_ACCESS_KEY="test"
 $env:AWS_DEFAULT_REGION="us-east-1"</code></pre>
               <div class="hint">
-                או: <code>source .env.floci</code> (אחרי שעתקתם את
+                או: <code>set -a; source .env.floci; set +a</code> (אחרי שעתקתם את
                 <code>.env.floci.example</code>)
               </div>
             </div>

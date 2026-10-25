@@ -869,80 +869,71 @@
         </figure>
       </section>
 
-      <!-- ═══════════════════════════════ התחלה מהירה ═══ -->
+      <!-- ═══════════════════════════════ התפקיד של Floci ═══ -->
       <section>
-        <h2>התחלה מהירה (דקה אחת)</h2>
-        <p class="lead">צריך רק Docker. כל השאר הוא אוטומטי.</p>
+        <h2>מה התפקיד של Floci, ובשביל מה משתמשים בו?</h2>
+        <p class="lead">
+          Floci הוא <strong>אמולטור של AWS</strong>: תוכנה שרצה על המחשב שלך
+          ועונה לפקודות של AWS כאילו היא הענן האמיתי. אותו API, אותן פקודות —
+          אבל בלי חשבון, בלי חיוב, ובלי לגעת בשום דבר אמיתי.
+        </p>
 
-        <div class="steps">
-          <article class="step">
-            <div class="num">1</div>
-            <div class="step-body">
-              <h3>מתקינים Docker</h3>
-              <p>
-                מורידים מ־<a
-                  href="https://docker.com/products/docker-desktop"
-                  style="color: var(--sky)"
-                  >docker.com</a
-                >, מתקינים, פותחים.
-              </p>
-              <div class="hint">אם כבר יש Docker, דלגו לשלב 2.</div>
-            </div>
-          </article>
+        <div class="grid">
+          <div class="chip">
+            <b>לומדים</b
+            ><span>מתרגלים S3, Lambda ו-DynamoDB בלי חשבון AWS</span>
+          </div>
+          <div class="chip">
+            <b>מפתחים</b
+            ><span>מריצים את הקוד מול &ldquo;ענן&rdquo; מקומי ומהיר</span>
+          </div>
+          <div class="chip">
+            <b>בודקים</b
+            ><span>טסטים אוטומטיים שלא תלויים באינטרנט ולא עולים כסף</span>
+          </div>
+          <div class="chip">
+            <b>מתנסים</b
+            ><span>אפשר למחוק ולהתחיל מחדש בלי לפחד לשבור משהו</span>
+          </div>
+        </div>
 
-          <article class="step">
-            <div class="num">2</div>
-            <div class="step-body">
-              <h3>בפקודה אחת</h3>
-              <p>Clone את ה-repo, נכנסו לתוכו, והריצו את הסקריפט הזה:</p>
-              <pre><code><span class="c"># Mac / Linux</span>
-./setup-floci.sh</code></pre>
-              <pre><code><span class="c"># Windows</span>
-setup-floci.bat</code></pre>
-              <div class="hint">
-                הסקריפט מעלה את Floci, מוריד את התוכנה בפעם הראשונה, וקובע את כל
-                ה-env vars. זה הכל.
-              </div>
-            </div>
-          </article>
-
-          <article class="step">
-            <div class="num">3</div>
-            <div class="step-body">
-              <h3>טסטו</h3>
-              <p><em>Bucket</em> זו תיקייה בענן. בדקו שהכל עובד:</p>
-              <pre><code>set -a; source .env.floci; set +a  <span class="c"># Mac/Linux</span>
-aws s3 mb s3://my-test-bucket
-aws s3 ls</code></pre>
-              <div class="hint">רואים את השם ברשימה? מוכנים! 🎉</div>
-            </div>
-          </article>
+        <div class="qa">
+          <div class="q">
+            <b>מתי לא להשתמש בו?</b>
+            <span
+              >Floci הוא כלי לפיתוח ולימוד, לא תחליף ל-AWS. הוא לא מתאים להרצת
+              מערכת אמיתית (production), ולא מוכיח שההרשאות, הביצועים או העלויות
+              יתנהגו אותו דבר בענן האמיתי. לפני העלאה לאמזון בודקים גם שם.</span
+            >
+          </div>
         </div>
       </section>
 
-      <!-- ═══════════════════════════════ שלבים ידניים ═══ -->
+      <!-- ═══════════════════════════════ מתחילים ═══ -->
       <section>
-        <h2>שלבים ידניים (אם אתם רוצים להבין כל דבר)</h2>
+        <h2>מתחילים: מ-Docker ועד ה-bucket הראשון</h2>
         <p class="lead">
-          כך קורה בצד הקלעים כשאתם מריצים את הסקריפט. שימוש — אם אתם אוהבים
-          בניית דברים ידני או למידה עמוקה.
+          ארבעה חלקים: מתקינים את הכלים, מפעילים את Floci, מחברים אליו את AWS
+          CLI, ויוצרים משהו ראשון. בערך עשר דקות, רובן הורדות.
         </p>
 
+        <h3>תנאים מקדימים</h3>
         <div class="steps">
           <article class="step">
             <div class="num">1</div>
             <div class="step-body">
-              <h3>מתקינים Docker</h3>
+              <h3>Docker</h3>
               <p>
-                Docker זו תוכנה שיודעת להריץ תוכנות אחרות בתוך
-                &ldquo;קופסה&rdquo; מבודדת. Floci רץ בקופסה כזו. מורידים מ־<a
+                Docker מריץ תוכנות בתוך &ldquo;קופסה&rdquo; מבודדת, וזה בדיוק מה
+                ש-Floci צריך. מורידים את Docker Desktop מ־<a
                   href="https://docker.com/products/docker-desktop"
                   style="color: var(--sky)"
                   >docker.com</a
-                >, מתקינים, פותחים.
+                >, מתקינים ופותחים אותו (משאירים אותו פתוח ברקע).
               </p>
+              <pre><code>docker --version</code></pre>
               <div class="hint">
-                בדקו שהוא עובד: <code>docker --version</code>
+                רואים מספר גרסה? מצוין. אם Docker כבר מותקן אצלך, דלגו הלאה.
               </div>
             </div>
           </article>
@@ -950,68 +941,159 @@ aws s3 ls</code></pre>
           <article class="step">
             <div class="num">2</div>
             <div class="step-body">
-              <h3>מרימים את Floci</h3>
+              <h3>AWS CLI</h3>
               <p>
-                פקודה אחת. בפעם הראשונה זה מוריד את התוכנה, אחר כך זה מיידי.
+                זו שורת הפקודה שדרכה נדבר עם Floci, בדיוק כמו עם AWS אמיתי.
+                ההתקנה לפי מערכת ההפעלה מוסברת ב־<a
+                  href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
+                  style="color: var(--sky)"
+                  >מדריך ההתקנה של AWS</a
+                >.
               </p>
-              <pre><code>docker run -d --name floci -p 4566:4566 floci/floci</code></pre>
-              <div class="hint">
-                <code>-p 4566:4566</code> אומר: &ldquo;פתח את דלת מספר
-                4566&rdquo;. זו הכתובת מהאיור למעלה. (או השתמשו ב-<code
-                  >docker-compose.yml</code
-                >
-                שבפוקט.)
-              </div>
+              <pre><code>aws --version</code></pre>
             </div>
           </article>
 
           <article class="step">
             <div class="num">3</div>
             <div class="step-body">
+              <h3>Floci CLI</h3>
+              <p>
+                הכלי הרשמי של Floci להפעלה וניהול. הקוד פתוח וזמין ב־<a
+                  href="https://github.com/floci-io/floci"
+                  style="color: var(--sky)"
+                  >GitHub של Floci</a
+                >
+                (ה-CLI עצמו נמצא ב־<a
+                  href="https://github.com/floci-io/floci-cli"
+                  style="color: var(--sky)"
+                  >floci-cli</a
+                >). בוחרים לפי מערכת ההפעלה:
+              </p>
+              <pre><code><span class="c"># Mac / Linux (Homebrew)</span>
+brew install floci-io/floci/floci
+
+<span class="c"># Mac / Linux (סקריפט התקנה)</span>
+curl -fsSL https://floci.io/install.sh | sh</code></pre>
+              <pre><code><span class="c"># Windows (PowerShell)</span>
+iwr https://floci.io/install.ps1 | iex</code></pre>
+              <pre><code>floci version</code></pre>
+              <div class="hint">
+                רואים גרסה? ההתקנה הצליחה. אם הפקודה לא נמצאת, סוגרים ופותחים
+                מחדש את הטרמינל.
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h3>מפעילים את Floci</h3>
+        <div class="steps">
+          <article class="step">
+            <div class="num">4</div>
+            <div class="step-body">
+              <h3><code>floci start</code></h3>
+              <p>
+                מפעילה את Floci. בפעם הראשונה הפקודה מורידה את התוכנה (זה לוקח
+                כמה דקות), אחר כך היא מפעילה את הקונטיינר ומחכה שיהיה מוכן. מרגע
+                זה Floci מקשיב בכתובת <code>http://localhost:4566</code>:
+                &ldquo;הכתובת של הענן&rdquo; שלך.
+              </p>
+              <pre><code>floci start</code></pre>
+              <div class="hint">
+                רוצים שהטרמינל יתפנה מיד? <code>floci start --detach</code>
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="num">5</div>
+            <div class="step-body">
+              <h3><code>floci status</code></h3>
+              <p>
+                בודקת שהכל חי: מצב הקונטיינר ובריאות השרת. אם Floci פועל, הפקודה
+                מסתיימת בהצלחה.
+              </p>
+              <pre><code>floci status</code></pre>
+              <div class="hint">
+                משהו לא עובד? <code>floci doctor</code> בודקת את הסביבה, ו-<code
+                  >floci logs</code
+                >
+                מציגה מה Floci מדפיס.
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h3>מחברים את AWS CLI ויוצרים משהו</h3>
+        <div class="steps">
+          <article class="step">
+            <div class="num">6</div>
+            <div class="step-body">
               <h3>מפנים את הכתובת</h3>
               <p>
-                אומרים ל-AWS CLI לשלוח הכל למחשב שלך. הסיסמאות מזויפות — Floci
-                לא בודק אותן.
+                ברירת המחדל של AWS CLI היא לדבר עם אמזון. כאן אנחנו אומרים לו
+                לשלוח הכל למחשב שלך. הסיסמאות מזויפות, כי Floci לא בודק אותן.
               </p>
               <pre><code><span class="c"># Mac / Linux</span>
-export AWS_ENDPOINT_URL=http://localhost:4566
-export AWS_ACCESS_KEY_ID=test
-export AWS_SECRET_ACCESS_KEY=test
-export AWS_DEFAULT_REGION=us-east-1</code></pre>
+eval $(floci env)</code></pre>
               <pre><code><span class="c"># Windows PowerShell</span>
 $env:AWS_ENDPOINT_URL="http://localhost:4566"
 $env:AWS_ACCESS_KEY_ID="test"
 $env:AWS_SECRET_ACCESS_KEY="test"
 $env:AWS_DEFAULT_REGION="us-east-1"</code></pre>
               <div class="hint">
-                או: <code>set -a; source .env.floci; set +a</code> (אחרי שעתקתם את
-                <code>.env.floci.example</code>)
+                ההגדרות חלות רק על חלון הטרמינל הנוכחי. פותחים חלון חדש? מריצים
+                שוב.
               </div>
             </div>
           </article>
 
           <article class="step">
-            <div class="num">4</div>
+            <div class="num">7</div>
             <div class="step-body">
-              <h3>יוצרים משהו</h3>
+              <h3>יוצרים bucket</h3>
               <p>
-                <em>Bucket</em> זו תיקייה בענן. הפקודה הזו יוצרת אחת — בדיוק
-                אותה פקודה שהיית מריץ מול AWS אמיתי.
+                <em>Bucket</em> הוא &ldquo;תיקייה&rdquo; ב-S3, שירות האחסון של
+                AWS. הפקודה הראשונה יוצרת אחת, והשנייה מציגה את כל ה-buckets. זו
+                בדיוק הפקודה שהיית מריץ מול AWS אמיתי.
               </p>
               <pre><code>aws s3 mb s3://my-first-bucket
 aws s3 ls</code></pre>
               <div class="hint">
-                רואה את השם ברשימה? יש לך ענן עובד על המחשב. 🎉
+                <code>s3://</code> אומר &ldquo;שירות S3&rdquo;,
+                <code>mb</code> הוא קיצור של make bucket, ו-<code
+                  >my-first-bucket</code
+                >
+                הוא השם שבחרנו. רואים אותו ברשימה? יש לך ענן עובד על המחשב. 🎉
               </div>
             </div>
           </article>
+        </div>
+
+        <h3>סיימתם? עוצרים ומנקים</h3>
+        <div class="qa">
+          <div class="q">
+            <b><code>floci stop</code></b>
+            <span
+              >עוצרת את Floci. עם <code>--remove</code> מוחקת גם את
+              הקונטיינר.</span
+            >
+          </div>
+          <div class="q">
+            <b><code>floci reset</code></b>
+            <span
+              >מוחקת את כל מה שיצרתם ומשאירה את Floci פועל, להתחלה נקייה.</span
+            >
+          </div>
         </div>
       </section>
 
       <!-- ═══════════════════════════════ מה עוד ═══ -->
       <section>
         <h2>מה עוד אפשר?</h2>
-        <p class="lead">Floci מדמה 75 שירותים. אלה הנפוצים למתחילים:</p>
+        <p class="lead">
+          Floci מדמה עשרות שירותים של AWS. אלה הנפוצים למתחילים:
+        </p>
 
         <div class="grid">
           <div class="chip"><b>S3</b><span>קבצים ותיקיות</span></div>
@@ -1037,29 +1119,29 @@ aws s3 ls</code></pre>
           <div class="q">
             <b>אני יכול לשבור משהו?</b>
             <span
-              >לא. אין קשר לחשבון AWS אמיתי. הכי גרוע — מוחקים את הקונטיינר
-              ומתחילים מחדש.</span
+              >לא. אין קשר לחשבון AWS אמיתי. הכי גרוע — מריצים
+              <code>floci reset</code> ומתחילים מחדש.</span
             >
           </div>
           <div class="q">
             <b>איפה הדברים שיצרתי?</b>
             <span
-              >בזיכרון. מכבים את הקונטיינר — הכל נעלם. זו תכונה, לא באג: כל הרצה
-              מתחילה נקי.</span
+              >כברירת מחדל הנתונים לא נשמרים בין הרצות, כך שכל הרצה מתחילה נקי.
+              אם רוצים לשמור מצב, יש את <code>floci snapshot</code>.</span
             >
           </div>
           <div class="q">
             <b>איך עוצרים?</b>
             <span
-              ><code>docker stop floci</code> ואם רוצים גם למחוק —
-              <code>docker rm floci</code>.</span
+              ><code>floci stop</code>, ואם רוצים גם למחוק את הקונטיינר —
+              <code>floci stop --remove</code>.</span
             >
           </div>
           <div class="q">
             <b>מה ההבדל מ-LocalStack?</b>
             <span
               >LocalStack התחילה לדרוש טוקן ב-2026. Floci עושה את אותו דבר בלי
-              הרשמה, ומתחיל ב-24 אלפיות שנייה.</span
+              הרשמה, ומתחיל מהר.</span
             >
           </div>
         </div>

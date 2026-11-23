@@ -30,6 +30,16 @@ export class ApiStack extends Stack {
     });
     props.coursesTable.grantReadData(listCoursesFn);
 
+    const getCourseFn = new NodejsFunction(this, 'GetCourseFunction', {
+      entry: '../../apps/api/src/handlers/get-course.ts',
+      runtime: Runtime.NODEJS_22_X,
+      timeout: Duration.seconds(10),
+      environment: {
+        COURSES_TABLE_NAME: props.coursesTable.tableName,
+      },
+    });
+    props.coursesTable.grantReadData(getCourseFn);
+
     const httpApi = new HttpApi(this, 'HttpApi', {
       apiName: 'flipthescript-academy-api',
     });
@@ -46,6 +56,15 @@ export class ApiStack extends Stack {
       integration: new HttpLambdaIntegration(
         'ListCoursesIntegration',
         listCoursesFn,
+      ),
+    });
+
+    httpApi.addRoutes({
+      path: '/courses/{courseId}',
+      methods: [HttpMethod.GET],
+      integration: new HttpLambdaIntegration(
+        'GetCourseIntegration',
+        getCourseFn,
       ),
     });
   }

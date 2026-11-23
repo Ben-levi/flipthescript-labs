@@ -22,7 +22,8 @@
           ],
           "main": "apps/api/src/handlers/health.ts",
           "additionalEntryPoints": [
-            "apps/api/src/handlers/list-courses.ts"
+            "apps/api/src/handlers/list-courses.ts",
+            "apps/api/src/handlers/get-course.ts"
           ],
           "tsConfig": "apps/api/tsconfig.app.json",
           "assets": [
